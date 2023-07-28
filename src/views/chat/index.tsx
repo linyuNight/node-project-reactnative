@@ -1,17 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { queryAllGroups } from '../../api/index'
 
 function Chat() {
-  let arr = [0, 1, 2]
+  let [groups, setGroups] = useState([])
+
+  useEffect(() => {
+    handlerQueryAllGroups()
+  }, [])
+
+  // 查看所有群
+const handlerQueryAllGroups = () => {
+  // globalStore.roomLoading = true
+  queryAllGroups().then((res: any) => {
+    // groups.value = JSON.parse(JSON.stringify(res)).map((val: any) => {
+    //   return {
+    //     id: val._id,
+    //     groupname: val.groupname,
+    //     creator: val.creator
+    //   }
+    // })
+
+    setGroups(JSON.parse(JSON.stringify(res)).map((val: any) => {
+      return {
+        id: val._id,
+        groupname: val.groupname,
+        creator: val.creator
+      }
+    }))
+
+    // globalStore.groups = groups.value
+  }).catch((err: any) => {
+    console.log(err)
+  }).finally(() => {
+    // globalStore.roomLoading = false
+  })
+}
 
   return (
     <View style={styles.container}>
       <View style={styles.chatContainer}>
-        {arr.map((val, index) => {
+        {groups.map((val, index) => {
           return (
-            <View style={styles.chatItem} key={index}>{ val }</View>
+            <View style={styles.chatItem} key={index}>
+              <Text>{ val.groupname }</Text>
+            </View>
           )
-        })}        
+        })}
       </View>
     </View>
   );
