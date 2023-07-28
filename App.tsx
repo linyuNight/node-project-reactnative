@@ -4,10 +4,10 @@ import { WebView } from 'react-native-webview';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome } from '@expo/vector-icons';
-import Chat from './pages/chat/index'
-import Cloud from './pages/cloud/index'
-import Music from './pages/music/index'
-import Setting from './pages/setting/index'
+import Chat from './src/views/chat/index'
+import Cloud from './src/views/cloud/index'
+import Music from './src/views/music/index'
+import Setting from './src/views/setting/index'
 
 const Tab = createBottomTabNavigator();
 
@@ -47,7 +47,11 @@ export default function App() {
     // </View>
 
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarStyle: styles.tabBar, // 设置 Tab 导航栏的高度
+        }}
+      >
         <Tab.Screen 
           name="Chat" 
           component={Chat}
@@ -100,5 +104,11 @@ const styles = StyleSheet.create({
     width:  '100%',
     height: 400,
     backgroundColor: '#fff',
+  },
+  tabBar: {
+    height: 70, // 设置底部选项卡栏的高度
+    backgroundColor: 'white', // 设置底部选项卡栏的背景颜色
+    paddingTop: 10,
+    paddingBottom: 10
   },
 });
