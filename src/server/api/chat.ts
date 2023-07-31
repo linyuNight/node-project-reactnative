@@ -1,5 +1,5 @@
-import server from '../server/index'
-import { queryParams, postParams } from '../utils/params'
+import server from '../index'
+import { queryParams, postParams } from '../../utils/params'
 
 // 注册
 export const registerApi = (params: any) => {
