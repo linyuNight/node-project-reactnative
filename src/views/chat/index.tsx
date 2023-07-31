@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { queryAllGroups } from '../../server/api/index'
+import { queryAllGroups } from '../../api/index'
 
 function Chat() {
   // 群列表
