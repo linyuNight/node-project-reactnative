@@ -1,6 +1,13 @@
 import axios from 'axios'
 import { baseUrl } from '../config/index'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import router from '@/router'
+
+let loginExpiredCallback = null;
+
+export function setLoginExpiredCallback(callback) {
+  loginExpiredCallback = callback;
+}
 
 const server = axios.create({
   baseURL: baseUrl,
@@ -12,8 +19,9 @@ const server = axios.create({
 
 // 请求拦截
 server.interceptors.request.use(
-  (config) => {
-    const tolen = localStorage.getItem('token')
+  async (config) => {
+    // const tolen = localStorage.getItem('token')
+    const tolen = await AsyncStorage.getItem('token')
     config.headers.Authorization = tolen
     return config
   }, (error) => {
@@ -24,6 +32,7 @@ server.interceptors.request.use(
 // 响应拦截
 server.interceptors.response.use(
   res => {
+    console.log('测试res', res)
     if (res.status === 200 || res.status === 206) {
       return Promise.resolve(res.data)
     } else {
@@ -38,6 +47,9 @@ server.interceptors.response.use(
       // router.push({
       //   name: 'login'
       // })
+      if (loginExpiredCallback) {
+        loginExpiredCallback();
+      }
       // return Promise.reject(new Error("to login"))
     }
   }
