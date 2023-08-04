@@ -1,5 +1,5 @@
 // const ispro = import.meta.env.MODE === 'pro'
-const ispro = false
+const ispro = !__DEV__
 
 export const isPro = ispro
 

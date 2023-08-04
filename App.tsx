@@ -74,11 +74,19 @@ const App: React.FC = () => {
         }))
 
         if (navigationRef) {
-          navigationRef.navigate('Tabs'); // 这里使用 navigationRef 进行页面导航
+          // navigationRef.navigate('Tabs'); // 这里使用 navigationRef 进行页面导航
+          navigationRef.reset({
+            index: 0,
+            routes: [{ name: 'Tabs' }]
+          });
         }
       } else {
         if (navigationRef) {
-          navigationRef.navigate('Login'); // 这里使用 navigationRef 进行页面导航
+          // navigationRef.navigate('Login'); // 这里使用 navigationRef 进行页面导航
+          navigationRef.reset({
+            index: 0,
+            routes: [{ name: 'Login' }]
+          });
         }
       }
     }).catch((err: any) => {

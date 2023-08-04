@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, SafeAreaView } from 'react-native';
 import { Audio } from 'expo-av';
 import {
   queryMusic,
@@ -8,7 +8,7 @@ import {
 import { useSelector } from 'react-redux';
 
 function Music() {
-  const { user } = useSelector((state: any) => state);
+  const user = useSelector((state: any) => state.user);
   const [musicList, setMusicList] = useState([])
   const [currentIndex, setCurrentIndex] = useState(null)
   const [audioSrc, setAudioSrc] = useState('')
@@ -91,34 +91,66 @@ function Music() {
     };
   }, [])
 
-  return (
-    <View style={styles.container}>
-      {/* <Text>Music</Text> */}
-      {
-        musicList.map((item: any, index: any) => {
-          return (
-            <View key={ index }>
-              <Text>{ item.name }</Text>
-              <TouchableOpacity 
-                onPress={() => play(item, index)}
-              >
-                <Text>播放</Text>
-              </TouchableOpacity>
-            </View>
-          )
-        })
-      }      
+  const renderListItem = ({ item, index }) => (
+    <View style={styles.musicItem}>
+      <Text style={styles.musicName}>{ item.name }</Text>
+      <TouchableOpacity
+        style={styles.playBtn}
+        onPress={() => play(item, index)}
+      >
+        <Text style={styles.playBtnText}>播放</Text>
+      </TouchableOpacity>
     </View>
+  )
+
+  return (
+    <SafeAreaView style={styles.area}>    
+      <View style={styles.container}>
+        {/* <Text>Music</Text> */}
+        <FlatList
+          style={styles.musicList}
+          data={musicList}
+          renderItem={renderListItem}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  area: {
+    flex: 1
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     // alignItems: 'center',
     // justifyContent: 'center',
   },
+  musicList: {
+    flex: 1,
+    padding: 14
+  },
+  musicItem: {
+    display: 'flex',
+    flexDirection: 'row',
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 10,
+    alignItems: 'center',
+    marginBottom: 10,
+    paddingLeft: 10
+  },
+  musicName: {
+    flex: 1
+  },
+  playBtn: {
+    width: 50,
+  },
+  playBtnText: {
+    color: 'blue'
+  }
 });
 
 export default Music

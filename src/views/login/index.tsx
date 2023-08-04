@@ -22,7 +22,11 @@ const Login: React.FC = () => {
         try {
           await AsyncStorage.setItem('token', res.token)
           console.log('999', await AsyncStorage.getItem('token'))
-          navigation.navigate('Tabs');
+          // navigation.navigate('Tabs');
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Tabs' }]
+          });
         } catch (e) {
           console.log(e)
         }        

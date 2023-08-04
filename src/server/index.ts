@@ -32,7 +32,7 @@ server.interceptors.request.use(
 // 响应拦截
 server.interceptors.response.use(
   res => {
-    console.log('测试res', res)
+    // console.log('测试res', res)
     if (res.status === 200 || res.status === 206) {
       return Promise.resolve(res.data)
     } else {

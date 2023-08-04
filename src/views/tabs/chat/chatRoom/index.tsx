@@ -9,15 +9,18 @@ import {
 import { baseUrl } from '../../../../config'
 import { useSelector, useDispatch } from 'react-redux';
 import { io } from 'socket.io-client'
+import Header from '../../../../components/Header'
+import { useNavigation } from '@react-navigation/native';
 
 const ChatRoom: React.FC = ({ route }: any) => {
-  const { user } = useSelector((state: any) => state);
+  const user = useSelector((state: any) => state.user);
   const [groupname, setGroupname] = useState('')
   const [messages, setMessages] = useState([])
   const [newMessage, setNewMessage] = useState('')
   const [socket, setSocket] = useState(null)
   const flatListRef = useRef(null);
   let isConnect = false
+  const navigation: any = useNavigation();
   // let keyboardDidShowListener = null
 
   useEffect(() => {
@@ -184,11 +187,12 @@ const ChatRoom: React.FC = ({ route }: any) => {
 
   return (
     <SafeAreaView style={styles.area}>
+      <Header showBack={true} title={'ChatRoom'} navigation={navigation} />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
-      >
-        <View style={styles.messageContain}>
+      >        
+        <View style={styles.messageContain}>          
           <FlatList
             ref={flatListRef}
             style={styles.messageList}

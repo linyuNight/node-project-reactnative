@@ -15,7 +15,7 @@ export const setNavigation = (callback: any) => {
 
 const ChatHome: React.FC = () => {
   const navigation: any = useNavigation();
-  const { counter, user } = useSelector((state: any) => state);
+  const user = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
 
   // 群列表
@@ -57,7 +57,7 @@ const ChatHome: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.chatContainer}>
-        <Text style={styles.groupTitle}>群组{counter}{user.userid}</Text>
+        <Text style={styles.groupTitle}>群组{user.userid}</Text>
         <Button title="Button" onPress={handlerClick}></Button>
         {groups.map((val, index) => {
           return (
